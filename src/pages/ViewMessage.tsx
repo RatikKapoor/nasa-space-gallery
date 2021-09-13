@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Message, getMessage } from '../data/messages';
+import { useState } from "react";
+import { CardContent, getCard, getCards } from "../data/messages";
 import {
   IonBackButton,
   IonButtons,
@@ -12,18 +12,19 @@ import {
   IonPage,
   IonToolbar,
   useIonViewWillEnter,
-} from '@ionic/react';
-import { personCircle } from 'ionicons/icons';
-import { useParams } from 'react-router';
-import './ViewMessage.css';
+} from "@ionic/react";
+import { car, personCircle } from "ionicons/icons";
+import { useParams } from "react-router";
+import "./ViewMessage.css";
 
 function ViewMessage() {
-  const [message, setMessage] = useState<Message>();
-  const params = useParams<{ id: string }>();
+  const [card, setCard] = useState<CardContent>();
+  const params = useParams<{ date: string }>();
 
   useIonViewWillEnter(() => {
-    const msg = getMessage(parseInt(params.id, 10));
-    setMessage(msg);
+    console.log(params.date);
+    const msg = getCard(params.date);
+    setCard(msg);
   });
 
   return (
@@ -31,21 +32,21 @@ function ViewMessage() {
       <IonHeader translucent>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton text="Inbox" defaultHref="/home"></IonBackButton>
+            <IonBackButton text="Back" defaultHref="/home"></IonBackButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
-        {message ? (
+        {card ? (
           <>
             <IonItem>
               <IonIcon icon={personCircle} color="primary"></IonIcon>
               <IonLabel className="ion-text-wrap">
                 <h2>
-                  {message.fromName}
+                  {card.title}
                   <span className="date">
-                    <IonNote>{message.date}</IonNote>
+                    <IonNote>{card.date}</IonNote>
                   </span>
                 </h2>
                 <h3>
@@ -55,7 +56,7 @@ function ViewMessage() {
             </IonItem>
 
             <div className="ion-padding">
-              <h1>{message.subject}</h1>
+              <h1>{card.copyright}</h1>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut

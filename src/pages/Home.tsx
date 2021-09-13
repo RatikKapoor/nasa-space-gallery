@@ -1,6 +1,6 @@
-import MessageListItem from '../components/MessageListItem';
-import { useState } from 'react';
-import { Message, getMessages } from '../data/messages';
+import ImageListItem from "../components/ImageListItem";
+import { useState } from "react";
+import { CardContent, getCards } from "../data/messages";
 import {
   IonContent,
   IonHeader,
@@ -10,17 +10,16 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-  useIonViewWillEnter
-} from '@ionic/react';
-import './Home.css';
+  useIonViewWillEnter,
+} from "@ionic/react";
+import "./Home.css";
 
 const Home: React.FC = () => {
-
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [cards, setCards] = useState<CardContent[]>([]);
 
   useIonViewWillEnter(() => {
-    const msgs = getMessages();
-    setMessages(msgs);
+    const cards = getCards();
+    setCards(cards);
   });
 
   const refresh = (e: CustomEvent) => {
@@ -33,7 +32,7 @@ const Home: React.FC = () => {
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Inbox</IonTitle>
+          <IonTitle>NASA Astronomy Picture of the Day</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -41,16 +40,10 @@ const Home: React.FC = () => {
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
 
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">
-              Inbox
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonList>
-          {messages.map(m => <MessageListItem key={m.id} message={m} />)}
+          {cards.map((m) => (
+            <ImageListItem key={m.copyright} card={m} />
+          ))}
         </IonList>
       </IonContent>
     </IonPage>

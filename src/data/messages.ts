@@ -1,62 +1,25 @@
-export interface Message {
-  fromName: string;
-  subject: string;
+export interface CardContent {
+  copyright: string;
+  title: string;
   date: string;
-  id: number;
+  url: string;
+  hd_url: string;
+  explanation?: string;
 }
 
-const messages: Message[] = [
+const cards: CardContent[] = [
   {
-    fromName: 'Matt Chorsey',
-    subject: 'New event: Trip to Vegas',
-    date: '9:32 AM',
-    id: 0
+    copyright: "Davide Necchi",
+    date: "2021-09-12",
+    explanation:
+      "What's happened to the sky? Aurora! Captured in 2015, this aurora was noted by Icelanders for its great brightness and quick development. The aurora resulted from a solar storm, with high energy particles bursting out from the Sun and through a crack in Earth's protective magnetosphere a few days later. Although a spiral pattern can be discerned, creative humans might imagine the complex glow as an atmospheric apparition of any number of common icons. In the foreground of the featured image is the Ölfusá River while the lights illuminate a bridge in Selfoss City. Just beyond the low clouds is a nearly full Moon. The liveliness of the Sun -- and likely the resulting auroras on Earth -- is slowly increasing as the Sun emerges from a Solar minimum, a historically quiet period in its 11-year cycle.",
+    hd_url:
+      "https://apod.nasa.gov/apod/image/2109/AuroraIceland_Necchi_1280.jpg",
+    title: "A Spiral Aurora over Iceland",
+    url: "https://apod.nasa.gov/apod/image/2109/AuroraIceland_Necchi_960.jpg",
   },
-  {
-    fromName: 'Lauren Ruthford',
-    subject: 'Long time no chat',
-    date: '6:12 AM',
-    id: 1
-  },
-  {
-    fromName: 'Jordan Firth',
-    subject: 'Report Results',
-    date: '4:55 AM',
-    id: 2
-
-  },
-  {
-    fromName: 'Bill Thomas',
-    subject: 'The situation',
-    date: 'Yesterday',
-    id: 3
-  },
-  {
-    fromName: 'Joanne Pollan',
-    subject: 'Updated invitation: Swim lessons',
-    date: 'Yesterday',
-    id: 4
-  },
-  {
-    fromName: 'Andrea Cornerston',
-    subject: 'Last minute ask',
-    date: 'Yesterday',
-    id: 5
-  },
-  {
-    fromName: 'Moe Chamont',
-    subject: 'Family Calendar - Version 1',
-    date: 'Last Week',
-    id: 6
-  },
-  {
-    fromName: 'Kelly Richardson',
-    subject: 'Placeholder Headhots',
-    date: 'Last Week',
-    id: 7
-  }
 ];
 
-export const getMessages = () => messages;
+export const getCards = () => cards;
 
-export const getMessage = (id: number) => messages.find(m => m.id === id);
+export const getCard = (date: string) => cards.find((m) => m.date === date);
