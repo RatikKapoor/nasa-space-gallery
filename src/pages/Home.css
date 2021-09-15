@@ -1,0 +1,9 @@
+ion-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+ion-list ion-card {
+  justify-self: center;
+}

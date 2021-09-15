@@ -60,7 +60,19 @@ ion-footer ion-title {
 
 ion-card {
   max-width: 60%;
-  margin: auto;
+}
+
+ion-card ion-card-header {
+  display: flex;
+  flex-direction: row;
+}
+
+ion-card ion-card-header div {
+  flex: 1;
+}
+
+ion-card ion-card-header ion-button {
+  align-self: flex-end;
 }
 
 ion-card ion-img {

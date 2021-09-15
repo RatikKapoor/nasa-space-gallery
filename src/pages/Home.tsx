@@ -4,7 +4,10 @@ import { ApiData } from "../data/interfaces";
 import {
   IonButton,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonList,
   IonPage,
   IonRefresher,
@@ -14,6 +17,7 @@ import {
 } from "@ionic/react";
 import "./Home.css";
 import NasaApi from "../data/NasaApi";
+import { refresh as refreshIcon } from 'ionicons/icons'
 
 const Home: React.FC = () => {
   // const cards: ApiData[] = useSelector(selectData)
@@ -22,8 +26,7 @@ const Home: React.FC = () => {
   const refresh = async (): Promise<void> => {
     let api: NasaApi = new NasaApi()
     try {
-      const result = await api.getDataForDates("2021-09-01", "2021-09-03")
-      console.log("Got data", result)
+      const result = await api.getDataForDates("2021-08-01", "2021-09-03")
       setCards(result)
     } catch (e) {
       console.error(e)
@@ -43,7 +46,6 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>NASA Astronomy Picture of the Day</IonTitle>
-          <IonButton onClick={() => refresh()}>Refresh</IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -57,6 +59,11 @@ const Home: React.FC = () => {
           )) : <div>Loading</div>}
         </IonList>
       </IonContent>
+      <IonFab vertical="bottom" horizontal="end">
+        <IonFabButton>
+          <IonIcon icon={refreshIcon} />
+        </IonFabButton>
+      </IonFab>
     </IonPage>
   );
 };
