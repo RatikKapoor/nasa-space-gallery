@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardContent, getCard, getCards } from "../data/messages";
+import { ApiData } from "../data/interfaces";
 import {
   IonBackButton,
   IonButtons,
@@ -18,13 +18,11 @@ import { useParams } from "react-router";
 import "./ViewMessage.css";
 
 function ViewMessage() {
-  const [card, setCard] = useState<CardContent>();
+  const [card, setCard] = useState<ApiData>();
   const params = useParams<{ date: string }>();
 
   useIonViewWillEnter(() => {
     console.log(params.date);
-    const msg = getCard(params.date);
-    setCard(msg);
   });
 
   return (

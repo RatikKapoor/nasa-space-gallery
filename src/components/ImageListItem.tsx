@@ -4,19 +4,25 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonIcon,
   IonImg,
   IonItem,
   IonLabel,
   IonNote,
+  IonThumbnail,
 } from "@ionic/react";
-import { CardContent } from "../data/messages";
+import { ApiData } from "../data/interfaces";
 import "./ImageListItem.css";
+import styled from "styled-components";
+import { heartOutline } from "ionicons/icons";
 
 interface MessageListItemProps {
-  card: CardContent;
+  data: ApiData;
 }
 
-const ImageListItem: React.FC<MessageListItemProps> = ({ card }) => {
+const ListCard = styled(IonCard)``;
+
+const ImageListItem: React.FC<MessageListItemProps> = ({ data }) => {
   return (
     // <IonItem routerLink={`/message/${card.copyright}`} detail={false}>
     //   <div slot="start" className="dot dot-unread"></div>
@@ -41,14 +47,15 @@ const ImageListItem: React.FC<MessageListItemProps> = ({ card }) => {
     //   <IonImg src={card.url} />
     // </IonItem>
     // <IonItem routerLink={`/date/${card.date}`} detail={false}>
-    <IonCard routerLink={`/date/${card.date}`}>
+    <IonCard routerLink={`/date/${data.date}`}>
+      <IonImg src={data.url} />
       <IonCardHeader>
-        <IonCardTitle>{card.title}</IonCardTitle>
-        <IonCardSubtitle>{card.copyright}</IonCardSubtitle>
+        <IonCardTitle>{data.title}</IonCardTitle>
+        <IonCardSubtitle>{data.copyright}</IonCardSubtitle>
+        <IonNote>{data.date}</IonNote>
+        <IonIcon icon={heartOutline} />
       </IonCardHeader>
-      <IonCardContent>
-        <IonImg src={card.url} />
-      </IonCardContent>
+      <IonCardContent></IonCardContent>
     </IonCard>
     // </IonItem>
   );

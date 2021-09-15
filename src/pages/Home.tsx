@@ -1,7 +1,8 @@
 import ImageListItem from "../components/ImageListItem";
-import { useState } from "react";
-import { CardContent, getCards } from "../data/messages";
+import { useEffect, useState } from "react";
+import { ApiData } from "../data/interfaces";
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonList,
@@ -10,39 +11,49 @@ import {
   IonRefresherContent,
   IonTitle,
   IonToolbar,
-  useIonViewWillEnter,
 } from "@ionic/react";
 import "./Home.css";
+import NasaApi from "../data/nasa";
+import { selectData, setData } from "../store/NasaDataStore";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home: React.FC = () => {
-  const [cards, setCards] = useState<CardContent[]>([]);
+  // const cards: ApiData[] = useSelector(selectData)
+  const [cards, setCards] = useState<ApiData[]>()
+  const dispatch = useDispatch();
 
-  useIonViewWillEnter(() => {
-    const cards = getCards();
-    setCards(cards);
-  });
+  const refresh = async (): Promise<void> => {
+    console.log("HERE")
+    let api: NasaApi = new NasaApi()
+    const result = await api.getImagesForDates("2021-09-01", "2021-09-03")
+    console.log(result)
+    setCards(result)
+  }
 
-  const refresh = (e: CustomEvent) => {
-    setTimeout(() => {
-      e.detail.complete();
-    }, 3000);
+  const refresh_pull = (e: CustomEvent) => {
+    refresh().then(() => e.detail.complete());
   };
+
+  useEffect(() => {
+    refresh()
+  }, [])
 
   return (
     <IonPage id="home-page">
       <IonHeader>
         <IonToolbar>
           <IonTitle>NASA Astronomy Picture of the Day</IonTitle>
+          <IonButton onClick={() => refresh()}>Refresh</IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
+        <IonRefresher slot="fixed" onIonRefresh={refresh_pull}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
 
         <IonList>
-          {cards.map((m) => (
-            <ImageListItem key={m.copyright} card={m} />
+          {cards && cards.map((m) => (
+            <ImageListItem key={m.date} data={m} />
           ))}
         </IonList>
       </IonContent>
