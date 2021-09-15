@@ -13,21 +13,21 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import "./Home.css";
-import NasaApi from "../data/nasa";
-import { selectData, setData } from "../store/NasaDataStore";
-import { useDispatch, useSelector } from "react-redux";
+import NasaApi from "../data/NasaApi";
 
 const Home: React.FC = () => {
   // const cards: ApiData[] = useSelector(selectData)
   const [cards, setCards] = useState<ApiData[]>()
-  const dispatch = useDispatch();
 
   const refresh = async (): Promise<void> => {
-    console.log("HERE")
     let api: NasaApi = new NasaApi()
-    const result = await api.getImagesForDates("2021-09-01", "2021-09-03")
-    console.log(result)
-    setCards(result)
+    try {
+      const result = await api.getDataForDates("2021-09-01", "2021-09-03")
+      console.log("Got data", result)
+      setCards(result)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const refresh_pull = (e: CustomEvent) => {
@@ -52,9 +52,9 @@ const Home: React.FC = () => {
         </IonRefresher>
 
         <IonList>
-          {cards && cards.map((m) => (
+          {cards ? cards.map((m) => (
             <ImageListItem key={m.date} data={m} />
-          ))}
+          )) : <div>Loading</div>}
         </IonList>
       </IonContent>
     </IonPage>
