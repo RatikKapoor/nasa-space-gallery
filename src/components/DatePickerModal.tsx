@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonDatetime, IonModal, IonText, IonTitle } from "@ionic/react";
+import { IonButton, IonContent, IonDatetime, IonModal, IonPage, IonText, IonTitle } from "@ionic/react";
 import { useEffect, useState } from "react";
 import "./DatePickerModal.css"
 
@@ -53,24 +53,33 @@ const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalP
             swipeToClose={true}
             showBackdrop={true}
             onDidDismiss={() => props.setShowSettingsModal(false)}>
-            <IonContent>
-                <IonTitle>Filter by Date:</IonTitle>
-                <IonText>Starting Date</IonText>
-                <IonDatetime displayFormat="YYYY-MM-DD"
-                    placeholder="Select starting date"
-                    onIonChange={e => setNewStartDate(e.detail.value ?? "")}
-                    value={newStartDate}
-                    max={today} />
-                <IonText>Ending Date</IonText>
-                <IonDatetime displayFormat="YYYY-MM-DD"
-                    placeholder="Select ending date"
-                    onIonChange={e => setNewEndDate(e.detail.value ?? "")}
-                    value={newEndDate}
-                    max={today} />
-                {hasError && <IonText color={"danger"}>Date error, please double check before submitting</IonText>}
-                <IonButton onClick={() => props.setShowSettingsModal(false)}>Cancel</IonButton>
-                <IonButton onClick={onSave} disabled={hasError} >Ok</IonButton>
-            </IonContent>
+            <IonPage style={{ padding: 10 }}>
+                <IonContent>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <IonTitle style={{ padding: 0, marginBottom: 10, textAlign: "center" }}>Filter by Date</IonTitle>
+                        <IonText style={{ textAlign: "center", width: "100%" }}>Starting Date</IonText>
+                        <IonDatetime displayFormat="YYYY-MM-DD"
+                            placeholder="Select starting date"
+                            onIonChange={e => setNewStartDate(e.detail.value ?? "")}
+                            value={newStartDate}
+                            max={today}
+                        />
+                        <IonText>Ending Date</IonText>
+                        <IonDatetime displayFormat="YYYY-MM-DD"
+                            placeholder="Select ending date"
+                            onIonChange={e => setNewEndDate(e.detail.value ?? "")}
+                            value={newEndDate}
+                            max={today} />
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                        {hasError && <IonText color={"danger"}>Date error, please double check before submitting</IonText>}
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-around", paddingTop: hasError ? 0 : 20 }}>
+                        <IonButton onClick={() => props.setShowSettingsModal(false)}>Cancel</IonButton>
+                        <IonButton onClick={onSave} disabled={hasError} >Ok</IonButton>
+                    </div>
+                </IonContent>
+            </IonPage>
         </IonModal>
 
     )

@@ -60,8 +60,8 @@ function ViewImage() {
 
       <IonContent fullscreen>
         {card ? (
-          <>
-            <IonGrid>
+          <div>
+            <IonGrid style={{ marginTop: "0.5vh" }}>
               <IonRow>
                 <IonIcon style={{ marginLeft: 10 }} icon={cameraOutline} color="primary" size="large" />
                 <IonTitle>{card.title}</IonTitle>
@@ -70,12 +70,12 @@ function ViewImage() {
                 <IonIcon style={{ marginRight: 10 }} icon={isLiked ? heart : heartOutline} size="large" color={isLiked ? "danger" : ""} />
               </IonRow>
             </IonGrid>
-            <IonImg src={card.hdurl} />
+            <IonImg style={{ maxWidth: "80vw", margin: "auto" }} src={card.hdurl} />
             <IonGrid style={{ padding: "0.5vw 2vw" }}>
               <IonTitle style={{ padding: 0, marginBottom: 5 }}>Explanation</IonTitle>
               <IonText>{card.explanation}</IonText>
             </IonGrid>
-          </>
+          </div>
         ) : (
           <IonTitle className="errorText">{hasError ? "Requested image not found" : ""}</IonTitle>
         )}

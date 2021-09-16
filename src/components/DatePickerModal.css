@@ -2,6 +2,12 @@ ion-content {
   display: flex;
 }
 
-ion-content ion-title {
-  size: 500px;
+.modal-wrapper {
+  --width: 350px;
+  --height: 255px;
+}
+
+ion-datetime {
+  padding-left: 0;
+  text-align: center;
 }

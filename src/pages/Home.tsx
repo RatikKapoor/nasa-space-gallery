@@ -73,7 +73,7 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle slot="start">NASA Astronomy Picture of the Day</IonTitle>
-          <IonButton slot="end" fill="outline" onClick={toggleSettingsModal}><IonIcon icon={settings}></IonIcon></IonButton>
+          <IonButton style={{ marginRight: 15 }} slot="end" fill="outline" onClick={toggleSettingsModal}><IonIcon icon={settings}></IonIcon></IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
