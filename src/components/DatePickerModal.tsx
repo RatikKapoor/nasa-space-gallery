@@ -77,7 +77,7 @@ const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalP
                             value={newStartDate}
                             max={today}
                         />
-                        <IonText>Ending Date</IonText>
+                        <IonText style={{ textAlign: "center", width: "100%" }}>Ending Date</IonText>
                         <IonDatetime displayFormat="YYYY-MM-DD"
                             placeholder="Select ending date"
                             onIonChange={e => setNewEndDate(e.detail.value ?? "")}
