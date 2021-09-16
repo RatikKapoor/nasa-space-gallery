@@ -6,6 +6,7 @@ export interface ApiData {
   title: string;
   url: string;
   copyright?: string;
+  code?: number;
 }
 
 const cards: ApiData[] = [];

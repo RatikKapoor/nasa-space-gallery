@@ -53,8 +53,8 @@ const ImageListItem: React.FC<MessageListItemProps> = ({ data }) => {
           <IonCardSubtitle>{data.copyright}</IonCardSubtitle>
           <IonNote>{data.date}</IonNote>
         </div>
-        <IonButton onClick={toggleIsLiked}>
-          <IonIcon icon={isLiked ? heart : heartOutline} />
+        <IonButton onClick={toggleIsLiked} fill="outline">
+          <IonIcon icon={isLiked ? heart : heartOutline} color={isLiked ? "danger" : ""} />
         </IonButton>
       </IonCardHeader>
       <IonCardContent></IonCardContent>

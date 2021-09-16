@@ -4,29 +4,48 @@ import {
   IonBackButton,
   IonButtons,
   IonContent,
+  IonGrid,
   IonHeader,
   IonIcon,
   IonImg,
-  IonItem,
-  IonLabel,
-  IonNote,
   IonPage,
+  IonRow,
+  IonText,
+  IonTitle,
   IonToolbar,
+  useIonLoading,
   useIonViewWillEnter,
 } from "@ionic/react";
-import { cameraOutline, car, personCircle } from "ionicons/icons";
+import { cameraOutline, heart, heartOutline } from "ionicons/icons";
 import { useParams } from "react-router";
 import "./ViewImage.css";
 import NasaApi from "../data/NasaApi";
+import LocalData from "../data/LocalData";
 
 function ViewImage() {
+  const [present, dismiss] = useIonLoading()
   const [card, setCard] = useState<ApiData>();
+  const [isLiked, setIsLiked] = useState<boolean>(false)
+  const [hasError, setHasError] = useState<boolean>(false)
   const params = useParams<{ date: string }>();
 
   useIonViewWillEnter(async () => {
-    let api: NasaApi = new NasaApi()
-    const data = await api.getDataForDate(params.date)
-    setCard(data)
+    present()
+    try {
+      let api: NasaApi = new NasaApi()
+      const data = await api.getDataForDate(params.date)
+      if (data && data.code && data.code !== 200) {
+        throw data
+      }
+      setCard(data)
+      let localData: LocalData = new LocalData()
+      const result: boolean = localData.getIsLiked(data.date)
+      setIsLiked(result)
+    } catch (e) {
+      console.error(e)
+      setHasError(true)
+    }
+    dismiss()
   });
 
   return (
@@ -42,26 +61,23 @@ function ViewImage() {
       <IonContent fullscreen>
         {card ? (
           <>
-            <IonItem>
-              <IonIcon icon={cameraOutline} color="primary"></IonIcon>
-              <IonLabel className="ion-text-wrap">
-                <h2>
-                  {card.title}
-                  <span className="date">
-                    <IonNote>{card.date}</IonNote>
-                  </span>
-                </h2>
-                <h1>{card.copyright}</h1>
-              </IonLabel>
-            </IonItem>
+            <IonGrid>
+              <IonRow>
+                <IonIcon style={{ marginLeft: 10 }} icon={cameraOutline} color="primary" size="large" />
+                <IonTitle>{card.title}</IonTitle>
+                <IonText style={{ marginRight: 20 }}>{card.copyright}</IonText>
+                <IonText style={{ marginRight: 20 }}>{card.date}</IonText>
+                <IonIcon style={{ marginRight: 10 }} icon={isLiked ? heart : heartOutline} size="large" color={isLiked ? "danger" : ""} />
+              </IonRow>
+            </IonGrid>
             <IonImg src={card.hdurl} />
-
-            <div className="ion-padding">
-              <p>{card.explanation}</p>
-            </div>
+            <IonGrid style={{ padding: "0.5vw 2vw" }}>
+              <IonTitle style={{ padding: 0, marginBottom: 5 }}>Explanation</IonTitle>
+              <IonText>{card.explanation}</IonText>
+            </IonGrid>
           </>
         ) : (
-          <div>Requested image not found</div>
+          <IonTitle className="errorText">{hasError ? "Requested image not found" : ""}</IonTitle>
         )}
       </IonContent>
     </IonPage>

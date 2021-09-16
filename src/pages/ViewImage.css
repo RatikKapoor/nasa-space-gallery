@@ -1,40 +1,30 @@
-#view-message-page ion-item {
-  --inner-padding-end: 0;
-  --background: transparent;
-}
-
-#view-message-page ion-label {
-  margin-top: 12px;
-  margin-bottom: 12px;
-}
-
-#view-message-page ion-item h2 {
-  font-weight: 600;
-}
-
-#view-message-page ion-item .date {
-  float: right;
-  align-items: center;
+/* ion-content ion-item {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
 }
 
-#view-message-page ion-item ion-icon {
-  font-size: 42px;
-  margin-right: 8px;
+ion-content ion-item ion-icon {
+  size: 40px;
 }
 
-#view-message-page ion-item ion-note {
-  font-size: 15px;
-  margin-right: 12px;
-  font-weight: normal;
+ion-item ion-text {
+  margin: 400 40;
+} */
+
+.errorText {
+  margin: auto;
 }
 
-#view-message-page h1 {
-  margin: 0;
-  font-weight: bold;
-  font-size: 22px;
+ion-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
-#view-message-page p {
-  line-height: 22px;
+ion-item {
+  border-width: 0;
 }

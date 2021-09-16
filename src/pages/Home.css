@@ -5,5 +5,15 @@ ion-list {
 }
 
 ion-list ion-card {
+  margin: 15px auto;
   justify-self: center;
+}
+
+ion-list ion-title {
+  margin: auto;
+}
+
+ion-toolbar {
+  display: flex;
+  flex-direction: row;
 }
