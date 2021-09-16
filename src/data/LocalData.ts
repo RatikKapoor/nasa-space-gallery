@@ -1,3 +1,8 @@
+/**
+ * LocalData
+ *
+ * Abstracts local storage functionality specifically in storing image "liked" state
+ */
 export class LocalData {
   private getStorageNameForDate(date: string): string {
     return `${date}-liked`;

@@ -25,15 +25,28 @@ interface MessageListItemProps {
   data: ApiData;
 }
 
+
+/**
+ * ImageListItem renders an inline card to display on the home page
+ * @param data API data for image item
+ * @returns Functional component
+ */
 const ImageListItem: React.FC<MessageListItemProps> = ({ data }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false)
 
+  /**
+   * Check on load if the image has been previously liked
+   */
   useEffect(() => {
     let localData: LocalData = new LocalData()
     const result: boolean = localData.getIsLiked(data.date)
     setIsLiked(result)
   }, [])
 
+  /**
+   * Like image handler, stops propagation of click to card onClick
+   * @param e Mouse Event
+   */
   const toggleIsLiked = (e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>) => {
     e.preventDefault()
     e.stopPropagation()

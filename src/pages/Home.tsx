@@ -21,6 +21,12 @@ import NasaApi from "../data/NasaApi";
 import { refresh as refreshIcon, settings } from 'ionicons/icons'
 import DatePickerModal from "../components/DatePickerModal";
 
+
+/**
+ * Home page
+ * 
+ * @returns Functional Component
+ */
 const Home: React.FC = () => {
   const [present, dismiss] = useIonLoading()
   const [cards, setCards] = useState<ApiData[]>()
@@ -29,6 +35,11 @@ const Home: React.FC = () => {
   const [startingDate, setStartingDate] = useState<string>("")
   const [endingDate, setEndingDate] = useState<string>("")
 
+  /**
+   * Refreshes page data
+   * 
+   * @returns void
+   */
   const refresh = async (): Promise<void> => {
     if (startingDate.length < 1 || endingDate.length < 1) {
       return
@@ -45,14 +56,26 @@ const Home: React.FC = () => {
     }
   }
 
+  /**
+   * Used to handle page pull down event and refresh
+   * 
+   * @param e Page pull down event
+   */
   const refresh_pull = (e: CustomEvent) => {
     refresh().then(() => e.detail.complete());
   };
 
+
+  /**
+   * Toggles displaying the settings modal (date picker)
+   */
   const toggleSettingsModal = () => {
     setShowSettingsModal(!showSettingsModal)
   }
 
+  /**
+   * On load decide which action to take
+   */
   useEffect(() => {
     if (startingDate.length < 1 || endingDate.length << 1) {
       setShowSettingsModal(true)
@@ -61,6 +84,9 @@ const Home: React.FC = () => {
       refresh()
   }, [])
 
+  /**
+   * Respond to shouldRefresh state changes
+   */
   useEffect(() => {
     if (shouldRefresh) {
       refresh()

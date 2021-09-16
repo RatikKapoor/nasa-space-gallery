@@ -12,12 +12,20 @@ interface DatePickerModalProps {
     shouldShowModal: boolean
 }
 
+/**
+ * Date picker (settings screen)
+ * @param props Contains start and end dates as well as SetStateAction callbacks
+ * @returns Functional component
+ */
 const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalProps) => {
     const [newStartDate, setNewStartDate] = useState<string>("")
     const [newEndDate, setNewEndDate] = useState<string>("")
     const [hasError, setHasError] = useState<boolean>(false)
     const [today, setToday] = useState("")
 
+    /**
+     * Save selected dates
+     */
     const onSave = () => {
         if (newStartDate !== props.startDate || newEndDate !== props.endDate) {
             console.log("Saving new start and end dates", newStartDate, newEndDate)
@@ -28,17 +36,23 @@ const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalP
         props.setShowSettingsModal(false)
     }
 
+    /**
+     * On load figure out what day it is today
+     */
     useEffect(() => {
         let today = new Date()
         setToday(today.toISOString().substring(0, 10))
         console.log("Today", today.toISOString().substring(0, 10))
     }, [])
 
+    /**
+     * Validate input
+     */
     useEffect(() => {
         console.log(Date.parse(newEndDate) - Date.parse(newStartDate), Date.now())
         if ((Date.parse(newEndDate) - Date.parse(newStartDate) < 0)
             || Date.now() - Date.parse(newEndDate) < 0) {
-            console.log("Errro")
+            console.log("Error detected")
             setHasError(true)
         }
         else if (hasError) {
@@ -47,7 +61,6 @@ const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalP
     }, [newStartDate, newEndDate])
 
     return (
-
         <IonModal
             isOpen={props.shouldShowModal}
             swipeToClose={true}
@@ -81,7 +94,6 @@ const DatePickerModal: React.FC<DatePickerModalProps> = (props: DatePickerModalP
                 </IonContent>
             </IonPage>
         </IonModal>
-
     )
 }
 

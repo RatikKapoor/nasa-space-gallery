@@ -22,13 +22,23 @@ import "./ViewImage.css";
 import NasaApi from "../data/NasaApi";
 import LocalData from "../data/LocalData";
 
-function ViewImage() {
+/**
+ * ViewImage
+ * 
+ * Single page view for a specific date
+ * 
+ * @returns Functional component
+ */
+const ViewImage: React.FC = () => {
   const [present, dismiss] = useIonLoading()
   const [card, setCard] = useState<ApiData>();
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [hasError, setHasError] = useState<boolean>(false)
   const params = useParams<{ date: string }>();
 
+  /**
+   * On load get API data and like state
+   */
   useIonViewWillEnter(async () => {
     present()
     try {

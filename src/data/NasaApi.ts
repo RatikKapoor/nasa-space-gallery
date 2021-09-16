@@ -1,10 +1,17 @@
 import { ApiData } from "./interfaces";
 
+/**
+ * NasaApi
+ *
+ * Abstracts functions needed to interact with NASA API
+ */
 class NasaApi {
   private nasaApodUrl: string = "https://api.nasa.gov/planetary/apod";
 
   /**
    * getImagesForDates
+   *
+   * @returns An array of ApiData which contains image data for selected date range
    */
   public async getDataForDates(
     startDate: string,
@@ -32,6 +39,12 @@ class NasaApi {
     return data as ApiData[];
   }
 
+  /**
+   * getDataForDate
+   *
+   * @param date Date to retrieve info for
+   * @returns ApiData object for specified date
+   */
   public async getDataForDate(date: string): Promise<ApiData> {
     let url = new URL(this.nasaApodUrl);
     if (process.env.REACT_APP_NASA_API_KEY === undefined) {
@@ -54,6 +67,11 @@ class NasaApi {
     return data as ApiData;
   }
 
+  /**
+   * getDefaultData
+   *
+   * @returns ApiData for current (default) date
+   */
   public async getDefaultData(): Promise<ApiData> {
     let url = new URL(this.nasaApodUrl);
     if (process.env.REACT_APP_NASA_API_KEY === undefined) {
